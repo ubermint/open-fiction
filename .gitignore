@@ -1,0 +1,19 @@
+# Python
+*.pyc
+*~
+__pycache__
+
+# Env
+.env
+env/
+etc/
+
+# Static folder
+/static/
+/catalog/static/
+
+# Visual Studio
+.vscode/
+.history/
+
+secret.env
