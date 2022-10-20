@@ -13,24 +13,24 @@ class Book(models.Model):
     year = models.PositiveIntegerField()
     word_count = models.PositiveIntegerField()
     description = models.TextField()
+    ebook = models.BooleanField(default=False)
+    price = models.FloatField(default=0)
+
+    def subjects():
+        return ("Memoir", "Nonfiction", "Fantasy", "Drama", "Horror",
+        "Satire", "Children’s", "Adventure", "Philosophy", "Comedy", 
+        "Shorts", "Poetry", "Spirituality", "Mystery", "Autobiography",
+        "Science Fiction", "Fiction")
 
     def __str__(self):
     	return self.title
 
-"""
-    class Genres(models.TextChoices):
-        JAN = "January"
-        FEB = "February"
-        MAR = "March"
-        DEC = "December"
-
-    genre = ArrayField(models.TextField(choices=Genres, max_length=2, blank=True))
-"""
-    
-
 class Store(models.Model):
     city = models.CharField(max_length=30)
+    country = models.CharField(max_length=30, default="")
+    open_date = models.CharField(max_length=100, default="")
     address = models.CharField(max_length=100)
+    coords = models.CharField(max_length=50, default="0, 0")
     contact = models.CharField(max_length=100)
 
     def __str__(self):
@@ -38,8 +38,8 @@ class Store(models.Model):
 
 class Catalog(models.Model):
     count = models.PositiveIntegerField()
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)    
 
 class Employee(models.Model):
     name = models.CharField(max_length=100)

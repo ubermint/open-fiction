@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% include "search.html" %}
+<div class="container mb-5 text-start">
+    <div class="row row-cols-2 row-cols-md-4 g-4 align-items-start">
+        {% for book in books %}
+        <div class="col">
+            <div class="card text-center bg-custom-1 text-custom-1 border-0 h-100" style="width: 12rem;">
+                <a class="a_custom" href="{% url 'book' uid=book.uid %}"  >
+               
+                <img src="{% static 'data/'%}{{ book.uid }}/cover-min.jpg" class="card-img-top" />
+
+                <div class="card-img-overlay text-end" style="pointer-events: none">
+                    <h6> <span class="badge bg-custom-3 text-custom-3">  <i class="bi bi-currency-dollar"></i>{{ book.price }} </span>  </h6>
+                </div>
+                
+                {% if book.ebook %} 
+                <div class="card-img-overlay text-start" style="pointer-events: none">
+                    <h6> <span class="badge bg-custom-3 text-custom-3 align-top"> <b class="gold"> E-book </b></span> </h6>
+                </div>
+                {% endif %}
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title"> 
+                        {{ book.title }} 
+                    </h5>
+                    <p class="card-subtitle mb-2 text-custom-2"> {{ book.author }} </p>
+                </div>
+            </div>
+            
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% include "pagination.html" %}
+{% endblock %}

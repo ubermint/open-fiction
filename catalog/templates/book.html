@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container-fluid">
+    <div class="row mb-4 gx-5 align-self-start">
+        <div class="col-3 text-end">
+            <embed style="width: 275px;" type="image/svg+xml" src="{% static 'data/'%}{{ book.uid }}/cover.svg" />
+        </div>
+        <div class="col-3">
+            <div class="card bg-custom-1 text-custom-1 mb-2" style="min-width: 15rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-text">
+                        Category: {% for sub in book.subject %}
+                        <span class="badge bg-custom-3 text-custom-3"> <a class="a_custom" href="/?subject={{ sub }}"> {{ sub }} </a> </span>
+                        {% endfor %}
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-custom-1 text-custom-1">
+                        Author: <a class="a_custom" href="https://wikipedia.org/wiki/{{ book.author }}"> <b> {{ book.author }} </b> </a>
+                    </li>
+                    <li class="list-group-item bg-custom-1 text-custom-1">
+                        Publisher: <a class="a_custom" href="https://www.gutenberg.org/"> <b>Project Gutenberg </b> </a>
+                    </li>
+                    <li class="list-group-item bg-custom-1 text-custom-1">Release date: <b> {{ book.year }} </b></li>
+                    <li class="list-group-item bg-custom-1 text-custom-1">Length: <b> {{ book.word_count }} words </b></li>
+                    <li class="list-group-item bg-custom-1 text-custom-1">
+                        <h5>
+                            Price: <span class="badge bg-custom-3 text-custom-3"> <i class="bi bi-currency-dollar"></i>{{ book.price }} </span>
+                        </h5>
+                    </li>
+                </ul>
+            </div>
+
+            {% if user.is_authenticated %}
+            <div class="d-grid gap-2">
+                {% if book.ebook %}
+                <button class="btn bg-custom-3 text-custom-3" type="button">
+                    <a class="a_custom" href="{% static 'data/'%}{{ book.uid }}/book{{ book.uid }}.epub"> <i class="bi bi-download"></i> Download book fragment </a>
+                </button>
+                {% endif %}
+                {% if user.is_superuser %}
+                <button class="btn bg-custom-3 text-custom-3" type="button"><i class="bi bi-gear"></i> Edit book details</button>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+      
+        <div class="col-5 text-custom-1">
+            <h5>Description</h5>
+            <div class="description" align="justify">
+                {{ book.description|safe }}
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row gx-5 mb-3 align-items-start text-center">
+         <div class="col-1"></div>
+         <div class="col-2 pr-5 text-center" > <div class="pr-5">   <canvas  id="qrcode"></canvas> </div></div>
+        <div class="col-3 text-center">
+            <div class="text-custom-1">
+                <a class="mb-3 a_custom btn bg-custom-2" type="button" data-bs-toggle="collapse" href="#collapseExample"> <i class="bi bi-chevron-down"></i> Show item availability in bookstores. <i class="bi bi-chevron-down"></i> </a>
+            </div>
+            <div class="collapse align-top" id="collapseExample">
+                <ul class="list-group align-items-stretch text-start align-top">
+                    {% for st in stock %} 
+                    {% if st.count == 0 %}
+                    <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-start">
+                        <div class="stock ms-2 me-auto">
+                            <a class="a_custom" href="{% url 'store' sid=st.store.id %}"> <div class="fw-bold">{{ st.store }} store</div> </a>
+                            Book is out of stock!
+                        </div>
+
+                        <span class="badge bg-custom-3 text-custom-3 rounded-pill"> <i class="bi bi-book"></i> {{ st.count }} </span>
+                    </li>
+                    {% elif st.count < 10%}
+                    <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <a class="a_custom" href="{% url 'store' sid=st.store.id %}"> <div class="fw-bold">{{ st.store }} store</div> </a>
+                            Only a small amount available for sale.
+                        </div>
+
+                        <span class="badge bg-custom-3 text-custom-3 rounded-pill"> <i class="bi bi-book"></i> {{ st.count }} </span>
+                    </li>
+                    {% else %}
+                    <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <a class="a_custom" href="{% url 'store' sid=st.store.id %}"> <div class="fw-bold">{{ st.store }} store</div> </a>
+                            Book is available in this store.
+                        </div>
+                        <span class="badge bg-custom-3 text-custom-3 rounded-pill"> <i class="bi bi-book"></i> {{ st.count }} </span>
+                    </li>
+                    {% endif %} {% endfor %}
+                </ul>
+            </div>  
+        </div>
+
+    
+       
+        <div class="col-5 text-start">
+            <div class="mb-3"> <h5 class="text-custom-1" id="reviews">Reviews</h5>
+            {% if user.is_authenticated %}
+
+            <form method="POST" action="{% url 'post_review' uid=book.uid %}" class="mb-2">
+                {% csrf_token %}
+                <textarea class="bg-custom-2 text-custom-1 border-0 mb-2" name="text" cols="80" rows="10" required id="id_text"> </textarea>
+                <p class="text-end mb-2">
+                    <button type="submit" class="save btn bg-custom-3 text-custom-3">Publish</button>
+                </p>
+            </form>
+            {% endif %}
+            </div>
+            <div class="scroll-class mb-2">
+                {% if reviews %}
+                    {% for rev in reviews %}
+                    <div class="card mb-3 bg-custom-2 text-custom-1">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Review by <i> {{ rev.author }} </i>
+
+                                {% if user.is_superuser %}
+                                <button type="button" class="btn position-absolute top-0 end-0 bg-custom-3 text-custom-3">
+                                    <a class="a_custom" href="{% url 'del_review' rid=rev.id %}"><i class="bi bi-x-lg"></i></a>
+                                </button>
+                                {% endif %}
+                            </h5>
+
+                            <p class="card-text">{{ rev.text }}</p>
+                            <p class="card-text"><small class="text-custom-2">{{ rev.created_date }}</small></p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                   <h5 class="text-custom-2"> No reviews for this book. </h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script type="text/javascript">
+    var qr_link = "{{ request.META.HTTP_HOST }}{{ request.path}}";
+</script>
+<script src="{% static 'js/book.js' %}"></script>
+{% endblock %}

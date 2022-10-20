@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mb-3">
+    <div class="row justify-content-center">
+        <div class="col-5 bg-custom-2" style="padding-top: 20px;">
+            <div class="card bg-custom-2 text-custom-1 border-0">
+                <img src="{% static 'img/store-min.jpg'%}" class="map" />
+                <div class="card-body">
+                    <h6 class="card-title bg-custom-2 text-custom-1 text-center">Bookstore in {{ store.city }}</h6>
+                    <p class="card-text">
+                        The shop itself is huge and has a great range of first edition books and a wide variety of genres and sections, so there really is something for everyone here. If that wasn't enough, to top it all off, it's like a
+                        maze... so I can't promise you that you won't get lost.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-5 bg-custom-2" style="padding-top: 20px;">
+            <div class="card bg-custom-2 text-custom-1 border-0">
+                <div id="map" class="map"></div>
+                <div class="card-body">
+                    <h6 class="card-title bg-custom-2 text-custom-1 text-center">Information</h6>
+                    <ul class="list-group list-group-flush bg-custom-2 text-custom-1">
+                        <li class="list-group-item bg-custom-2 text-custom-1">Location: <i> {{ store.city }}, {{ store.country }} </i></li>
+                        <li class="list-group-item bg-custom-2 text-custom-1">Address: <i> {{ store.address }} </i></li>
+                        <li class="list-group-item bg-custom-2 text-custom-1">Open: <i>{{ store.open_date }} </i></li>
+                        <li class="list-group-item bg-custom-2 text-custom-1">Contact: <a class="a_custom" href="mailto:{{ store.contact }}"><i>{{ store.contact }}</i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var coords = "{{ store.coords }}";
+</script>
+<script src="{% static 'js/map.js' %}"></script>
+
+{% endblock %}

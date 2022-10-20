@@ -1,0 +1,38 @@
+<div class="container mb-5">
+    <form method="GET">
+        <div class="row g-3 mb-3 align-items-center">
+            <div class="col-auto">
+                <select class="form-select bg-custom-2 text-custom-1 border-0" multiple aria-label="multiple select example" name="subject">
+                    <option value="" selected>Choose subject</option>
+                    {% for sub in subjects %}
+                    <option value="{{ sub }}"> {{ sub }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col">
+                <div class="row g-3 mb-3 align-items-center">
+                    <div class="col">
+                        <input class="form-control form-control-lg bg-custom-2 text-custom-1 border-0" type="search" name="q" value="{{ request.GET.q }}" placeholder="Search">
+                    </div>
+                </div>
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <select class="form-select bg-custom-2 text-custom-1 border-0" name="sort">
+                            <option selected value="">Sorting </option>
+                            <option value="1">Sort by title name </option>
+                            <option value="2">Sort by author</option>
+                            <option value="3">Sort by price</option>
+                        </select>
+                    </div>
+                    <div class="col"> </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn bg-custom-3 text-custom-3"><i class="bi bi-search"></i> search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+        {% if not books %}
+           <h5 class="text-custom-2"> There are no books matching this search. </h5>
+       {% endif %}
+</div>
