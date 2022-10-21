@@ -2,11 +2,11 @@
 {% block content %}
 {% load static %}
 {% include "search.html" %}
-<div class="container mb-5 text-start">
-    <div class="row row-cols-2 row-cols-md-4 g-4 align-items-start">
+<div class="container mb-5 text-start d-flex justify-content-around">
+    <div class="row row-cols-2 row-cols-md-4 g-4 align-items-start d-flex justify-content-around">
         {% for book in books %}
-        <div class="col">
-            <div class="card text-center bg-custom-1 text-custom-1 border-0 h-100" style="width: 12rem;">
+        <div class="col d-flex text-center">
+            <div class="card mx-auto text-center bg-custom-1 text-custom-1 border-0 h-100" style="width: 12rem;">
                 <a class="a_custom" href="{% url 'book' uid=book.uid %}"  >
                
                 <img src="{% static 'data/'%}{{ book.uid }}/cover-min.jpg" class="card-img-top" />

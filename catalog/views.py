@@ -77,7 +77,7 @@ def post_review(request, uid):
     return redirect(f"/book/{uid}#reviews")
 
 def catalog(request):
-    books = Book.objects.all()
+    books = Book.objects.get_queryset().order_by('-uid')
     get_query = request.GET.get('q')
     get_subject = request.GET.get('subject')
     get_sort = request.GET.get('sort')
