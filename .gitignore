@@ -6,14 +6,10 @@ __pycache__
 # Env
 .env
 env/
-etc/
+misc/
 
 # Static folder
 /static/
 /catalog/static/
-
-# Visual Studio
-.vscode/
-.history/
 
 secret.env

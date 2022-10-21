@@ -8,32 +8,27 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
-"""
-
-from pathlib import Path
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+"""
 
+from pathlib import Path
+import mimetypes
 import os
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-SECRET_KEY = r'django-insecure-!&+7e!!es!(_2$1%xabd+h(0p@0(jb$f40%iaj5l1yr3q^16j3'
+mimetypes.add_type("image/svg+xml", ".svg", True)
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1"]
 
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'catalog',
 ]
 
@@ -83,10 +79,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'book_store',
-        'USER': 'bookstore_admin',
-        'PASSWORD': r'm&6K!D73Y2%xriZ!',
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
 
