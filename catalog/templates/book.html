@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+{% get_media_prefix as media %}
 
 <div class="container-fluid">
     <div class="row mb-4 gx-5 align-self-start">
         <div class="col-3 text-end">
-            <embed style="width: 275px;" type="image/svg+xml" src="{% static 'data/'%}{{ book.uid }}/cover.svg" />
+            
+            <embed style="width: 275px;" type="image/svg+xml" src="{{ media }}data/{{ book.uid }}/cover.svg" />
         </div>
         <div class="col-3">
             <div class="card bg-custom-1 text-custom-1 mb-2" style="min-width: 15rem;">
@@ -38,11 +40,11 @@
             <div class="d-grid gap-2">
                 {% if book.ebook %}
                 <button class="btn bg-custom-3 text-custom-3" type="button">
-                    <a class="a_custom" href="{% static 'data/'%}{{ book.uid }}/book{{ book.uid }}.epub"> <i class="bi bi-download"></i> Download book fragment </a>
+                    <a class="a_custom" href="{{ media }}data/{{ book.uid }}/book{{ book.uid }}.epub"> <i class="bi bi-download"></i> Download book fragment </a>
                 </button>
                 {% endif %}
                 {% if user.is_superuser %}
-                <button class="btn bg-custom-3 text-custom-3" type="button"><i class="bi bi-gear"></i> Edit book details</button>
+                <button class="btn bg-custom-3 text-custom-3" type="button"><i class="bi bi-gear"></i> <a class="a_custom" href="{% url 'edit_book' uid=book.uid %}"> Edit book details </a></button>
                 {% endif %}
             </div>
             {% endif %}
@@ -61,12 +63,38 @@
          <div class="col-1"></div>
          <div class="col-2 pr-5 text-center" > <div class="pr-5">   <canvas  id="qrcode"></canvas> </div></div>
         <div class="col-3 text-center">
-            <div class="text-custom-1">
+            <div class="text-custom-1" id="stock">
                 <a class="mb-3 a_custom btn bg-custom-2" type="button" data-bs-toggle="collapse" href="#collapseExample"> <i class="bi bi-chevron-down"></i> Show item availability in bookstores. <i class="bi bi-chevron-down"></i> </a>
             </div>
             <div class="collapse align-top" id="collapseExample">
                 <ul class="list-group align-items-stretch text-start align-top">
                     {% for st in stock %} 
+
+                    <div class="modal fade" id="Modal{{ st.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content bg-custom-2 text-custom-1">
+                          <div class="modal-header border-0">
+                            <h1 class="modal-title fs-5" id="ModalLabel{{ st.id }}"> {{st.store}} bookstore </h1>
+                           
+                          </div>
+                          <form method="POST" class="text-custom-1 text-center" action="{% url 'change_stock' uid=st.id %}">
+                          <div class="modal-body border-0">
+                              
+                                    <h4 class="text-center">Change amount of this book in bookstore.</h4>
+                                    {% csrf_token %}
+                                    <input type="number" min="0" name="amount" autofocus=""  class="form-mini" placeholder="{{ st.count }}" required="">
+
+                             </div>
+                          <div class="modal-footer border-0">
+                            <button type="button" class="btn bg-custom-3 text-custom-3" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn bg-custom-3 text-custom-3">Save changes</button>
+                          </div>
+                          </form>
+
+                        </div>
+                      </div>
+                    </div>
+
                     {% if st.count == 0 %}
                     <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-start">
                         <div class="stock ms-2 me-auto">
@@ -75,6 +103,12 @@
                         </div>
 
                         <span class="badge bg-custom-3 text-custom-3 rounded-pill"> <i class="bi bi-book"></i> {{ st.count }} </span>
+
+                        {% if user.is_superuser %}
+                            <button type="button" class="btn bg-custom-3 text-custom-3" data-bs-toggle="modal" data-bs-target="#Modal{{ st.id }}">
+                             <i class="bi bi-gear"></i>
+                            </button>
+                        {% endif %}
                     </li>
                     {% elif st.count < 10%}
                     <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-start">
@@ -83,20 +117,33 @@
                             Only a small amount available for sale.
                         </div>
 
-                        <span class="badge bg-custom-3 text-custom-3 rounded-pill"> <i class="bi bi-book"></i> {{ st.count }} </span>
+                        <span class="badge bg-custom-3 text-custom-3 rounded-pill"> <i class="bi bi-book"></i> {{ st.count }}</span>
+
+                        {% if user.is_superuser %}
+                            <button type="button" class="btn bg-custom-3 text-custom-3" data-bs-toggle="modal" data-bs-target="#Modal{{ st.id }}">
+                             <i class="bi bi-gear"></i>
+                            </button>
+                        {% endif %}
+
                     </li>
                     {% else %}
                     <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <a class="a_custom" href="{% url 'store' sid=st.store.id %}"> <div class="fw-bold">{{ st.store }} store</div> </a>
-                            Book is available in this store.
+                            Book is available in this store. 
                         </div>
                         <span class="badge bg-custom-3 text-custom-3 rounded-pill"> <i class="bi bi-book"></i> {{ st.count }} </span>
+                        {% if user.is_superuser %}
+                            <button type="button" class="btn bg-custom-3 text-custom-3" data-bs-toggle="modal" data-bs-target="#Modal{{ st.id }}">
+                             <i class="bi bi-gear"></i>
+                            </button>
+                        {% endif %}
                     </li>
                     {% endif %} {% endfor %}
                 </ul>
             </div>  
         </div>
+
 
     
        

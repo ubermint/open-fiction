@@ -4,6 +4,11 @@
 
 <div class="container py-5 wrapper">
   <form method="POST" class="form-signin text-custom-1 text-center">
+    {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}" />
+    {% else %}
+        <input type="hidden" name="next" value="/" />
+    {% endif %}
     <h2 class="form-signin-heading text-center">Login</h2>
     {% csrf_token %}
     {% for field in login_form %}
