@@ -32,14 +32,12 @@
             </div>
         </div>
     </form>
-        {% if not books %}
-           <h5 class="text-custom-2"> There are no books matching this search. </h5>
-       {% endif %}
+    {% if not books %}
+    <h5 class="text-custom-2"> There are no books matching this search. </h5>
+    {% endif %}
 </div>
 <div class="container mb-5 text-center">
-         {% if user.is_superuser %}
- 
-        <button class="btn bg-custom-3 text-custom-3">  <a class="a_custom" href="/new_book"> New book <i class="bi bi-file-earmark-plus"></i></a> </button>
-    
-        {% endif %}
-    </div>
+    {% if user.is_superuser %}
+    <button class="btn bg-custom-3 text-custom-3">  <a class="a_custom" href="/new_book"> New book <i class="bi bi-file-earmark-plus"></i></a> </button>
+    {% endif %}
+</div>

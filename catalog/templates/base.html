@@ -9,82 +9,75 @@
         <link rel="stylesheet" href="{% static 'css/catalog.css' %}">
         <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-        
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@7.1.0/ol.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     </head>
     <body>
-<nav class="navbar navbar-expand-lg bg-custom-2 text-custom-1 mb-4" style="color: #e3f2fd;">
-    <div class="container-fluid">
-        <a class="navbar-brand a_custom bg-custom-2  text-custom-1" style="color: #eaeaea;" href="/"> <h5 class="mytitle"> open-fiction </h5> </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link a_nav bg-custom-2  text-custom-1" href="/">Home</a>
-                </li>
-                <li class="nav-item dropdown bg-custom-2  text-custom-1">
-                  <a class="nav-link a_nav bg-custom-2  text-custom-1 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Bookstores
-                  </a>
-                  <ul class="dropdown-menu bg-custom-2  text-custom-1" aria-labelledby="navbarDropdown">
-                    {% for store in base_stores %}
-                    <li class="bg-custom-2  text-custom-1"><a class="nav-link dropdown-item a_nav" href="{% url 'store' sid=store.id %}"> <i class="bi bi-bank"></i> {{ store }} store </a></li>
-                     {% endfor %}
-                  </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link a_nav bg-custom-2  text-custom-1" href="/">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link a_nav bg-custom-2  text-custom-1" href="/about">About</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link text-custom-1 a_custom" style="color: #eaeaea" href="#"><i class="bi bi-person"></i><i>{{user.username}}</i></a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="nav-link a_nav"  href="/logout">Logout</a>
-                  </li>
-                  {% else %}
-
-                  <li class="nav-item">
-                    <a class="nav-link a_nav " href="/login">Login</a>
-                  </li>
-                {% endif %}
-            </ul>
+        <nav class="navbar navbar-expand-lg bg-custom-2 text-custom-1 mb-4" style="color: #e3f2fd;">
+            <div class="container-fluid">
+                <a class="navbar-brand a_custom bg-custom-2  text-custom-1" style="color: #eaeaea;" href="/">
+                    <h5 class="mytitle"> open-fiction </h5>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link a_nav bg-custom-2  text-custom-1" href="/">Home</a>
+                        </li>
+                        <li class="nav-item dropdown bg-custom-2  text-custom-1">
+                            <a class="nav-link a_nav bg-custom-2  text-custom-1 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Bookstores
+                            </a>
+                            <ul class="dropdown-menu bg-custom-2  text-custom-1" aria-labelledby="navbarDropdown">
+                                {% for store in base_stores %}
+                                <li class="bg-custom-2  text-custom-1"><a class="nav-link dropdown-item a_nav" href="{% url 'store' sid=store.id %}"> <i class="bi bi-bank"></i> {{ store }} store </a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link a_nav bg-custom-2  text-custom-1" href="/">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link a_nav bg-custom-2  text-custom-1" href="/about">About</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link text-custom-1 a_custom" style="color: #eaeaea" href="#"><i class="bi bi-person"></i><i>{{user.username}}</i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link a_nav"  href="/logout">Logout</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link a_nav " href="/login">Login</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% if messages %}
+        <div class="container text-center">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
         </div>
-    </div>
-</nav>
-         {% if messages %}
-
-         <div class="container text-center">
-        {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    </div>
-        
-
         {% endif %}
         {% block content %}
         {% endblock %}
-
-
-
         <nav class="nav  opacity-75 sticky-bottom text-center bg-custom-2 text-custom-1">
-          <div class="container opacity-75">
-             <footer> <div class="text-center p-2 bg-custom-2 text-custom-1">
-      <i class="bi bi-cc-circle"></i> 2022 — Vadim Tieplov
-    </div> </footer>
-          </div>
+            <div class="container opacity-75">
+                <footer>
+                    <div class="text-center p-2 bg-custom-2 text-custom-1">
+                        <i class="bi bi-cc-circle"></i> 2022 — Vadim Tieplov
+                    </div>
+                </footer>
+            </div>
         </nav>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-
-          
     </body>
 </html>

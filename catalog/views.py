@@ -218,7 +218,6 @@ def edit_book(request, uid):
             else:
                 book.save()
                 messages.success(request, "Book has been successfully updated!")
-                update_catalog(book.uid)
                 return redirect('book', uid=book.uid)
     else:
         form = BookForm(instance=book)

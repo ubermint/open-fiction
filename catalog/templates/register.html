@@ -1,36 +1,26 @@
 {% extends "base.html" %}
 {% block content %}        
-
 {% load widget_tweaks %}      
-
-
 <div class="container wrapper py-5">
-	<form method="POST" class="form-signin text-custom-1 text-center">
-		<h2 class="form-signin-heading text-center">Register</h2>
-		{% csrf_token %}
-		{% for field in register_form %}
-		    <div class="fieldWrapper">
-		       {% if field.errors %}
-				    <ol>
-				    {% for error in field.errors %}
-				        <li><strong>{{ error|escape }}</strong></li>
-				    {% endfor %}
-				    </ol>
-				{% endif %}
-		        {% render_field field class+="form-control" placeholder=field.label %}
-		    </div>
-		    <br>
-		{% endfor %}
-         
-		 <button class="btn bg-custom-3 text-custom-3" type="submit">Register</button> 
-<br> <br>
- <p class="text-center text-custom-1">If you already have an account <a href="/login" class="btn btn-sm bg-custom-3 text-custom-3" role="button">Login</a> </p>
-
-	</form>
+    <form method="POST" class="form-signin text-custom-1 text-center">
+        <h2 class="form-signin-heading text-center">Register</h2>
+        {% csrf_token %}
+        {% for field in register_form %}
+        <div class="fieldWrapper">
+            {% if field.errors %}
+            <ol>
+                {% for error in field.errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+            </ol>
+            {% endif %}
+            {% render_field field class+="form-control" placeholder=field.label %}
+        </div>
+        <br>
+        {% endfor %}
+        <button class="btn bg-custom-3 text-custom-3" type="submit">Register</button> 
+        <br> <br>
+        <p class="text-center text-custom-1">If you already have an account <a href="/login" class="btn btn-sm bg-custom-3 text-custom-3" role="button">Login</a> </p>
+    </form>
 </div>
-
-
-
-
-
 {% endblock %}

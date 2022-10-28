@@ -10,7 +10,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 mimetypes.add_type("image/svg+xml", ".svg", True)
 
-DEBUG = False
+DEBUG = False/
 
 ALLOWED_HOSTS = ["127.0.0.1", "141.147.20.138"]
 

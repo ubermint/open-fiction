@@ -2,53 +2,46 @@
 {% block content %}
 {% load static %}
 {% load widget_tweaks %}    
-
 <div class="container py-5 wrapper">
-  <form method="POST" class="form-book text-custom-1" enctype="multipart/form-data" >
-    <h2 class="text-center">New book in catalog</h2>
-    <br>
-
-      {% for field in book_form %}
-
-           {% if field.errors %}
-            <ol>
+    <form method="POST" class="form-book text-custom-1" enctype="multipart/form-data" >
+        <h2 class="text-center">New book in catalog</h2>
+        <br>
+        {% for field in book_form %}
+        {% if field.errors %}
+        <ol>
             {% for error in field.errors %}
-                <li><strong>{{ error|escape }}</strong></li>
+            <li><strong>{{ error|escape }}</strong></li>
             {% endfor %}
-            </ol>
+        </ol>
         {% endif %}
-    {% endfor %}
-
-<div class="row g-4">
-  <div class="col text-center">
-    {% csrf_token %}
-    {% render_field book_form.title class+="form-control" placeholder=book_form.title.label %}
-    <br>
-    {% render_field book_form.author class+="form-control" placeholder=book_form.author.label %}
-    <br>
-          {% render_field book_form.year class+="form-min" placeholder=book_form.year.label %} 
-          {% render_field book_form.word_count class+="form-min" placeholder="Length" %}
-            <br> <br>
-            {% render_field book_form.subject class+="form-select bg-custom-2 text-custom-1 border-0" placeholder=book_form.subject.label size=6 %}
-            <br>
-            <label> Book cover (1400x2100 jpeg)</label> {% render_field book_form.cover class+="form-control" required="" %}
-            <br>
-            <label> eBook file (epub) </label> <br>
-            {% render_field book_form.ebook_file class+="form-control"%}
-            <input type="hidden" name="ebook" value="False"/>
-  </div>
-  <div class="col">
-     {% render_field book_form.description class+="form-big" placeholder=book_form.description.label %}
-      <br> <br>
-       
-        {% render_field book_form.price class+="form-min" placeholder=book_form.price.label %}
-    <br>
-  </div>
-</div>
-<div class="text-end"> <button class="btn bg-custom-3 text-custom-3" type="submit">Add book</button>  </div>
- <br>
-
-  </form>
-
+        {% endfor %}
+        <div class="row g-4">
+            <div class="col text-center">
+                {% csrf_token %}
+                {% render_field book_form.title class+="form-control" placeholder=book_form.title.label %}
+                <br>
+                {% render_field book_form.author class+="form-control" placeholder=book_form.author.label %}
+                <br>
+                {% render_field book_form.year class+="form-min" placeholder=book_form.year.label %} 
+                {% render_field book_form.word_count class+="form-min" placeholder="Length" %}
+                <br> <br>
+                {% render_field book_form.subject class+="form-select bg-custom-2 text-custom-1 border-0" placeholder=book_form.subject.label size=6 %}
+                <br>
+                <label> Book cover (1400x2100 jpeg)</label> {% render_field book_form.cover class+="form-control" required="" %}
+                <br>
+                <label> eBook file (epub) </label> <br>
+                {% render_field book_form.ebook_file class+="form-control"%}
+                <input type="hidden" name="ebook" value="False"/>
+            </div>
+            <div class="col">
+                {% render_field book_form.description class+="form-big" placeholder=book_form.description.label %}
+                <br> <br>
+                {% render_field book_form.price class+="form-min" placeholder=book_form.price.label %}
+                <br>
+            </div>
+        </div>
+        <div class="text-end"> <button class="btn bg-custom-3 text-custom-3" type="submit">Add book</button>  </div>
+        <br>
+    </form>
 </div>
 {% endblock %}
