@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 
 from django.contrib.auth.models import User
 
@@ -43,6 +44,9 @@ class Store(models.Model):
     address = models.CharField(max_length=100)
     coords = models.CharField(max_length=50, default="0, 0")
     contact = models.CharField(max_length=100)
+
+    def get_url(self):
+        return reverse('store', args=[str(self.id)])
 
     def __str__(self):
         return self.city

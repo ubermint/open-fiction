@@ -120,6 +120,7 @@ def catalog(request):
     context = {
         'subjects': Book.subjects(),
         'books': books,
+        'is_paginated': True,
         'stores': stores
     }
 

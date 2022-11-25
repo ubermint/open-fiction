@@ -7,10 +7,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 SECRET_KEY = os.getenv('SECRET_KEY')
+IS_DEBUG = os.getenv('IS_DEBUG')
 
 mimetypes.add_type("image/svg+xml", ".svg", True)
 
-DEBUG = False/
+if IS_DEBUG == "True":
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = ["127.0.0.1", "141.147.20.138"]
 
