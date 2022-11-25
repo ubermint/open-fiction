@@ -1,0 +1,148 @@
+@font-face {
+  font-family: 'Palatino';
+  src: url('palatino.woff') format('woff'),
+    url('palatino.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Palatino';
+  src: url('palatino-bold.woff') format('woff');
+  font-weight: bold;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+
+body {
+	background: #332f35;
+  display:grid; 
+  grid-template-rows: auto 1fr auto;
+  min-height:100vh;
+  font-family: "Palatino", "Lato", "Roboto";
+}
+
+.mytitle {
+	font-family: "Lato";
+}
+
+.map {
+	height: 300px;
+	width: 100%
+}
+
+.scroll-class {
+  height:500px;
+  overflow-y: scroll;
+}
+
+.description {
+	font-size: 1.1em;
+	height:400px;
+  overflow-y: scroll;
+}
+
+.bg-custom-1 {
+	background-color: #332f35;
+}
+
+.bg-custom-2 {
+	background-color: #1f1c23;
+}
+
+.bg-custom-3 {
+	background-color: #eaeaea;
+}
+
+.text-custom-1 {
+    color: #eaeaea;    
+}
+
+.text-custom-2 {
+	color: #7c7583;
+}
+
+.text-custom-3 {
+	color: #332f35;
+}
+
+.text-custom-4 {
+  color: #1f1c23;
+}
+
+.a_custom, .a_custom:hover, .a_custom:focus, .a_custom:active{
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.a_nav, .a_nav:focus {
+	color: #eaeaea;
+	text-decoration: inherit;
+}
+
+.a_nav:hover {
+	color: #1f1c23;	
+	background-color: #eaeaea;
+}
+
+.wrapper {	
+  margin-bottom: 350px;
+}
+
+.form-signin {
+  max-width: 380px;
+  padding: 15px 35px 0px;
+  margin: 0 auto;
+  background-color: #1f1c23;
+  border: 1px solid rgba(0,0,0,0.1);  
+}
+
+.form-book {
+  width: 1000px;
+  padding: 15px 35px 0px;
+  margin: 0 auto;
+  background-color: #1f1c23;
+  border: 1px solid rgba(0,0,0,0.1);  
+}
+
+.form-control {
+  max-width: 360px;
+  font-size: 15px;
+  height: auto;
+  padding: 10px;
+  background-color: #eaeaea;
+  color: #332f35;
+}
+
+.form-big {
+  width: 580px;
+  font-size: 15px;
+  height: 475px;
+  padding: 10px;
+  background-color: #eaeaea;
+  color: #332f35;
+}
+
+.form-min {
+	width: 150px;
+  font-size: 15px;
+  height: auto;
+  padding: 10px;
+  background-color: #eaeaea;
+  color: #332f35;
+}
+
+.form-control-lg {
+  width: 100%;
+}
+
+.fieldWrapper input {
+  font-size: 15px;
+  height: auto;
+  padding: 10px;
+  background-color: #eaeaea;
+  color: #332f35;
+}
+
+.stock {
+	max-width: 256px;
+}
+

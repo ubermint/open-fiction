@@ -10,6 +10,5 @@ misc/
 
 # Static folder
 /static/
-/catalog/static/
 
 secret.env
